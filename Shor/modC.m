@@ -11,14 +11,19 @@ I = [1,0;0,1]; % Identity matrix
 I = sparse(I);
 N = power(2,M);
 U = zeros(N); %Unitary matrix
+K=U;
 I_M = I;
     for i = 1:M-1
         I_M = kron(I_M,I);
     end
     for i = 1:N
-        r = mod((i-1)*a,C);
-        if(r~=0)
-            U(i,r+1)=1;
+        if (i<C+1)
+            r = mod((i-1)*a,C);
+            if(r~=0)
+                U(i,r+1)=1;
+            else
+                U(i,i)=1;
+            end
         else
             U(i,i)=1;
         end
@@ -28,10 +33,11 @@ I_M = I;
     T = amodC(L,R0,R1,I,1,U,I_M);
     for i = 2:L
         U = U*U;
-        T = T*amodC(L,R0,R1,I,i,U,I_M);
+        T = amodC(L,R0,R1,I,i,U,I_M)*T;
     end
+
     function T = amodC(L,R0,R1,I,i,U,I_M)
-        % For on condition
+        % For off condition
         for j = 1:L
             if(j==L+1-i) % For the on off condition
                 if(j==1) % For initialising T
@@ -47,7 +53,7 @@ I_M = I;
                 end
             end
         end
-        % For off condition
+        % For on condition
         for j = 1:L
             if(j==L+1-i)    % For the on off condition
                 if(j==1)    % For initialising T
@@ -66,4 +72,20 @@ I_M = I;
         T = kron(T1,I_M)+kron(T2,U);
     end
 end
-
+  
+%     function U = test(N,C,a,K)
+%         U=K;
+%         for i = 1:N
+%             if (i<C+1)
+%                 r = mod((i-1)*a,C);
+%     %             if(r~=0)
+%                     U(i,r+1)=1;
+%     %             else
+%     %                 U(i,i)=1;
+%     %             end
+%             else
+%                 U(i,i)=1;
+%             end
+%         end
+%         U = sparse(U);
+%     end

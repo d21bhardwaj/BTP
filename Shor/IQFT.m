@@ -1,5 +1,5 @@
 function FT = IQFT(L)
-H = [1,1;1,-1]; %Hadmard Gate
+H = (1/sqrt(2))*[1,1;1,-1]; %Hadmard Gate
 H = sparse(H);
 if(L==1)
     FT = H;
@@ -33,17 +33,16 @@ T1 = H;    % Temporary Matrix;
             end
         end
         %Adding T2 and T3 to get the correct matrix;
-%         T1 
-%         T2
-%         T3
         T1 = (T2+T3)*T1;
-%         T1 = T1*(T2+T3);
     end
     FT = T1;
    FT = kron(I,IQFT(L-1))*FT; %Recursive call for IQFT_{L-1}
-%    FT = FT*kron(I,IQFT(L-1));
+%  function R = rot(x)
+%         x = pi/x;
+%         R = [cos(x),sin(x);-sin(x),cos(x)];
+%     end
     function R = rot(x)
         x = pi/x;
-        R = [cos(x),sin(x);sin(x),-cos(x)];
+        R = [1,0;0,exp(1i*x)];
     end
 end

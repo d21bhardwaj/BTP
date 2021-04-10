@@ -17,7 +17,7 @@ U_M = modC(M,a,C,L);
 U_H = kron(Hadmard(L),I_M);
 si = pst(L+M);
 T = U_M*U_H*si;
-A = U_L*T;
+A = full(U_L*T);
 % [T1, T2,T ]=result(L,M,T);
 % figure
 % plot(T1(:,1),T1(:,2),'o')

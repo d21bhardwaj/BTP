@@ -1,14 +1,9 @@
 function [Table2,period] = result2(L,M, R)
     N = L+M;
     R = modu(R);
-    R = R.*R;
-    % Table to store result of x^{~}vs f(x)
-    % Table to store result of f(x)vs P(f)
+    
     Table2 = zeros([power(2,M) 2]);
     period=0;
-    for i = 1:power(2,L)
-        Table1(i,1) = i-1; 
-    end
     for i = 1:power(2,M)
         Table2(i,1) = i-1;
     end
@@ -27,13 +22,15 @@ function [Table2,period] = result2(L,M, R)
         f = v(1:M);
         f = bi2de(f)+1;
     end
-     function si = modu(ps)
+    function si = modu(ps)
          a = 0;
          for i = 1:length(ps)
-             a = a +ps(i)*ps(i);
+             ps(i)=abs(ps(i))^2;
+             a = a + ps(i);
          end
-         a = sqrt(a);
+
          si = ps/a;
      end
+
      
 end

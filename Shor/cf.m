@@ -1,6 +1,9 @@
-function res = cf(num, den, iter)
+function d = cf(num, den, C)
 %CF - Continued fractions
-    prev = 0;
+    iter = 1000;
+    prev=0;
+    v = 0;
+    d = [];
     res = ContinuedFractionUtil(num,den,iter,[]);
     s = length(res);
     for cur_size = 2:s+1
@@ -12,7 +15,11 @@ function res = cf(num, den, iter)
             den = (res(i)*den) + num;
             num = prev;
         end
-        fprintf("%0.4i hi   %0.4i \n",num,den);
+        if(den>C)
+            return;
+        end
+        den = [den];
+        d = [den d];
     end
 
     function res = ContinuedFractionUtil(num, den, iter,res) 

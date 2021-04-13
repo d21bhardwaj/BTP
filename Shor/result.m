@@ -1,7 +1,7 @@
 function [Table1, Table2,R,period] = result(L,M, R)
     N = L+M;
     R = modu(R);
-%     R = R.*R;
+%   R = R.*R;
     % Table to store result of x^{~}vs f(x)
     Table1 = zeros([power(2,L) 2]);
     % Table to store result of f(x)vs P(f)

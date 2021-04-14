@@ -1,8 +1,9 @@
+import IQFT.*
 A1 = [1;0];
 B1 = [0;1];
 A2 = A1.';
 B2 = B1.';
-H = sqrt(2)*[1,1;1,-1];
+H = [1,1;1,-1];
 I = [1,0;0,1];
 psi = kron(A1,kron(A1,A1));
 pst = kron(H,kron(H,H))*psi;
@@ -22,6 +23,7 @@ E = kron(I,(kron(A1*A2,I)+kron(B1*B2,rot(2))));
 E = kron(E,I4);
 F = kron(I,kron(I,H));
 F = kron(F,I4);
+
 % G = F*E*D*C*B*A*pst;
 % G = modu(G)
 % G.*G
@@ -30,7 +32,7 @@ F = kron(F,I4);
 % H.*H
 U = zeros(16);
 Z = U;
-X= U;
+X = U;
 Y = U;
 for i = 1:16
     r = mod((i-1)*7,15);
@@ -70,9 +72,14 @@ D1 = kron(I,kron(I,D1));
 D2 = (kron(A1*A2,kron(I,I4))+kron(B1*B2,kron(I,X)));
 D2 = kron(I,D2);
 D3 = (kron(A1*A2,kron(I,kron(I,I4)))+kron(B1*B2,kron(I,kron(I,Y))));
-G = F*E*D*C*B*A*D3*D2*D1*H4*psi;
-G = modu(G)
+N = kron(IQFT(3),I4);
+Q = F*E*D*C*B*A*D3*D2*D1*H4*psi;
+G = N*D3*D2*D1*H4*psi;
+G = modu(G);
+Q = modu(Q);
 K=G.*G;
+R = Q.*Q;
+
 for i = 1:power(2,7)
     if K(i)>0
         fprintf('%i %i ',i,K(i))

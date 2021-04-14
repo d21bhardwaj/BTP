@@ -1,8 +1,8 @@
 function FT = IQFT(L)
-H = (1/sqrt(2))*[1,1;1,-1]; %Hadmard Gate
+H = (1/sqrt(2))*[1,1;1,-1]; %Hadamard Gate
 H = sparse(H);
 if(L==1)
-    FT = H;
+    FT = H; %for 1 qubit only Hadamard Gate is applied
     return;
 end
 K0 = [1;0];%Ket |0>
@@ -37,10 +37,7 @@ T1 = H;    % Temporary Matrix;
     end
     FT = T1;
    FT = kron(I,IQFT(L-1))*FT; %Recursive call for IQFT_{L-1}
-%  function R = rot(x)
-%         x = pi/x;
-%         R = [cos(x),sin(x);-sin(x),cos(x)];
-%     end
+   %Phase rotation matrix
     function R = rot(x)
         x = pi/x;
         R = [1,0;0,exp(1i*x)];

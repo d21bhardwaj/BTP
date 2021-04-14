@@ -5,7 +5,6 @@ function v = measure(n,ps)
     r = rand; 
     i=1;
     for i = 1 : N
-        q =0;
         if(ps(i)>0)
             a = ps(i);
             q = q+ a;

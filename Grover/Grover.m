@@ -1,9 +1,6 @@
 %No of qubits
-n = 8;
-N= power(2,n);
-w = 0;
-%Matlab Matrix starts from one.
-w = w+1;
+n = 12;N= power(2,n);w = 50;
+w = w+1;%Matlab array starts from 1 
 O = speye(N); J = O;
 J(1,1)=-1;O(w,w)=-1;
 %Hadmard Gate for n qubits H
@@ -16,12 +13,11 @@ psi =A;
  end
 psi = H_G*psi;
 m=int64(sqrt(power(2,n))*22/28);
-fprintf("Value of m = %i for maximum probablility of finding w = %i \n",m,w)
+fprintf("Value of m = %i +/-1 for maximum probablility of finding w = %i \n",m,w-1)
 % Maximum value of m for Till which the loop will function
-L = 400;
+L = 200;
 %For Storing the results after each Application of Gorvers Diffusor circuit
-y = zeros(L,1);
-x = [1:L];
+y = zeros(L,1);x = [1:L];
 %Applying Grovers Diffusor Circuit 
 G = H_G*J*H_G*O;
 G = sparse(G);
